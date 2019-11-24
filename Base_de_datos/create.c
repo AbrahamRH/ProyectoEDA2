@@ -31,6 +31,11 @@ int main()
 	InsertTable();
 }
 
+/* -------------------------------*/
+/**
+ * @Synopsis Función para la creación de la tabla de Elementos
+ */
+/* -------------------------------*/
 void CreateTable()
 {
 	//apuntador a la base de datos
@@ -68,6 +73,11 @@ void CreateTable()
 	sqlite3_close(db);
 }
 
+/* -------------------------------*/
+/**
+ * @Synopsis Función para la inseción de elementos en la base de datos
+ */
+/* -------------------------------*/
 void InsertTable()
 {
 	//apuntador a la base de datos
@@ -90,8 +100,10 @@ void InsertTable()
 
 	char* err_msg = NULL;
 
+	//Se ejecuta la cosulta
 	rc = sqlite3_exec( db, query, NULL, 0, &err_msg);
 
+	//Se verifica que la consulta sea correcta
 	if(rc != SQLITE_OK ){
 		fprintf( stderr, "SQL error: %s\n", err_msg);
 		sqlite3_free(err_msg);
