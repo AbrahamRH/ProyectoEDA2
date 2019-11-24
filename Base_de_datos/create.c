@@ -16,6 +16,14 @@
  *
  */
 
+/**
+ * @file create.c
+ * @Synopsis Programa para la creación e insercion de elementos en una base de datos
+ * @version 1.0
+ * @date 2019-11-23
+ */
+
+
 #include <stdio.h>
 #include "sqlite3.h"
 
@@ -95,8 +103,13 @@ void InsertTable()
 
 	/*Consulta para la inserción de datos a la tabla*/
 	char* query = "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 1, 'Hidrógeno', 'H');"
-				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 2, 'Helio', 'He');"
-			;
+				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 2, 'Helio',     'He');"
+				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 8, 'Oxígeno',   'O');"
+				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 7, 'Nitrógeno', 'N');"
+				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 6, 'Carbono',	'C');"
+				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 9, 'Flúor',		'F');"
+				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 11, 'Sodio',	'Na');"
+				  ;
 
 	char* err_msg = NULL;
 
