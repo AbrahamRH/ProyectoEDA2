@@ -44,7 +44,7 @@ private:
 
 	std::string Simbolo;			///< Simbolo del elemento
 
-	int numeroAtomico;				///< Número atómico del elemento
+	int electronesValencia;			///< Electrones de Valencia
 
 	std::list<Vertex> neighbors; 	///< lista de vértices adyacentes
 
@@ -115,7 +115,7 @@ public:
 	 * @param numero Número asignado
 	 */
 	/* -------------------------------*/
-	void set_numero_atomico( int numero );
+	void set_valencia( int numero );
 
 	//Getters
 
@@ -142,6 +142,15 @@ public:
 	 * @brief Método para obtener los vecinos de un vértice
 	 *
 	 * @return Lista con los vecinos de un vértice
+	 */
+	/* -------------------------------*/
+	int get_valencia();
+
+	/* -------------------------------*/
+	/**
+	 * @brief Método para obtener el numero electrones de valencia
+	 *
+	 * @return Electrones de valencia
 	 */
 	/* -------------------------------*/
 	std::list<Vertex> get_neighbors();
@@ -184,6 +193,16 @@ void Vertex::set_color( Vertex::Colors color)
 void Vertex::set_predecesor( std::string predecesor )
 {
 	this->predecesor = predecesor;
+}
+
+void Vertex::set_valencia( int numero )
+{
+	this->electronesValencia = numero;
+}
+
+void Vertex::get_valencia()
+{
+	return this->electronesValencia;
 }
 
 Vertex::Colors Vertex::get_color()
