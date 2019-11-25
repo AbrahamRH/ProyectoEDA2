@@ -1,4 +1,20 @@
-
+/* Copyright (C)
+ * 2019 - eda1 dot fiunam at yahoo dot com dot mx
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ */
 
 #include <iostream>
 
@@ -23,53 +39,112 @@ public:
 	enum class Colors { BLACK, GRAY, WHITE };
 
 private:
-	std::string name; ///< campo de texto. Se utilizará como key
 
-	// aquí van más campos relacionados con la naturaleza de la información del
-	// nodo. P. ej., Estudiante: promedio, semestre. Persona: dirección, edad;
-	// etc.
+	std::string name;				///< Nombre del elemento. Se utilizará como key
 
-	std::string Simbolo;
+	std::string Simbolo;			///< Simbolo del elemento
 
-	int numeroAtomico;
+	int numeroAtomico;				///< Número atómico del elemento
 
-	std::list<Vertex> neighbors; ///< lista de vértices adyacentes
+	std::list<Vertex> neighbors; 	///< lista de vértices adyacentes
 
-	Colors color{ Colors::BLACK };
+	Colors color{ Colors::BLACK };	///< Color del vértice
 
-	std::string  predecesor;
+	std::string  predecesor;		///< Nombre del vértice predecesor
 
 public:
 
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Constructor de la clase Vertex
+	 *
+	 * @Param name Nombre para inicializar el vértice
+	 */
+	/* -------------------------------*/
 	Vertex( std::string name );
 
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Método para obtener el nombre del vértice
+	 *
+	 * @return
+	 */
+	/* -------------------------------*/
 	std::string get_name() const;
 
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Método ppara agregar un nodo vecino a la lista del vértice
+	 *
+	 * @Param v Vértice agregado a la lista
+	 */
+	/* -------------------------------*/
 	void add_neighbor( Vertex v );
 
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Método para imprimir los nodos vecinos al vértice
+	 */
+	/* -------------------------------*/
 	void print_neighbors();
 
-	//Métodos agregados
 	//Setters
 
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Método para asignar un color al vértice
+	 *
+	 * @Param color Color ( estado ) asignado
+	 */
+	/* -------------------------------*/
 	void set_color( Vertex::Colors color );
 
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Método para asignar el predecesor al vértice
+	 *
+	 * @Param predecesor Nombre del vértice predecesor
+	 */
+	/* -------------------------------*/
 	void set_predecesor( std::string predecesor );
 
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Método para asignar el número atómico
+	 *
+	 * @Param numero Número asignado
+	 */
+	/* -------------------------------*/
 	void set_numero_atomico( int numero );
-
-	void set_nombre( std::string nombre );
 
 	//Getters
 
-	int get_distance();
-
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Método para obtener el color (estado) de un vértice
+	 *
+	 * @return Color ( estado ) de un vértice
+	 */
+	/* -------------------------------*/
 	Colors get_color();
 
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Método para obtener el predecesor a un vértice
+	 *
+	 * @return Nombre del predecesor al vértice
+	 */
+	/* -------------------------------*/
 	std::string get_predecesor();
 
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Método para obtener los vecinos de un vértice
+	 *
+	 * @return Lista con los vecinos de un vértice
+	 */
+	/* -------------------------------*/
 	std::list<Vertex> get_neighbors();
-
 
 	/* -------------------------------*/
 	/**
@@ -101,8 +176,6 @@ void Vertex::print_neighbors()
 	std::cout << "Nil";
 }
 
-//Setters
-
 void Vertex::set_color( Vertex::Colors color)
 {
 	this->color = color;
@@ -112,9 +185,6 @@ void Vertex::set_predecesor( std::string predecesor )
 {
 	this->predecesor = predecesor;
 }
-
-
-//Getters
 
 Vertex::Colors Vertex::get_color()
 {
@@ -129,7 +199,6 @@ std::string Vertex::get_predecesor()
 std::list<Vertex> Vertex::get_neighbors(){
 	return this->neighbors;
 }
-
 
 void Vertex::print()
 {
@@ -147,30 +216,72 @@ void Vertex::print()
 }
 
 
-
-
 //----------------------------------------------------------------------
 //  Class Graph
 //----------------------------------------------------------------------
 class Graph
 {
 private:
-	std::map<std::string, Vertex> vertices; ///< lista de vértices en el grafo
 	// asociamos un vértice (value) a una cadena (key):
 	// vertices[ string ] = a_vertex
+	std::map<std::string, Vertex> vertices; ///< lista de vértices en el grafo
 
 public:
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Constructor de la clase Graph
+	 */
+	/* -------------------------------*/
 	Graph();
-//	Graph( std::vector<Vertex> vertices );
 
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Método para agregar un vértice al grafo
+	 *
+	 * @Param v Vétice que sera agregado al grafo
+	 *
+	 * @return True: Si se agrego el vértice al grafo False: en caso contrario
+	 */
+	/* -------------------------------*/
 	bool add_vertex( Vertex v );
 
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Método para agregar las aristas a los vértices
+	 *
+	 * @Param edge1 Nodo de la arista
+	 * @Param edge2 Nodo de la arista
+	 *
+	 * @return True: si se agrego la arista False: en caso contrario
+	 */
+	/* -------------------------------*/
 	bool add_edge( std::string edge1, std::string edge2 );
 
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Método ara la impresión del grafo
+	 */
+	/* -------------------------------*/
 	void print();
 
-	void BFS(Vertex* start);
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Algoritmo para el recorrido del grafo Breadth-first search
+	 *
+	 * @Param start Apuntador al vértice de inicio del recorrido
+	 */
+	/* -------------------------------*/
+	void BFS( Vertex* start );
 
+	/* -------------------------------*/
+	/**
+	 * @Synopsis Método para obtener un vértice del grafo
+	 *
+	 * @Param name Nombre del vértice que se desea obtener
+	 *
+	 * @return Apuntador a el vértice
+	 */
+	/* -------------------------------*/
 	Vertex* get_vertex( std::string name);
 
 };
@@ -207,8 +318,6 @@ bool Graph::add_edge( std::string edge1, std::string edge2 )
 	return res;
 }
 
-
-//Devuelve un apuntador a un vértice del grafo
 Vertex* Graph::get_vertex( std::string name){
 	return &this->vertices.find(name)->second;
 }
