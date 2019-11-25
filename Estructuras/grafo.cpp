@@ -46,6 +46,8 @@ private:
 
 	int electronesValencia;			///< Electrones de Valencia
 
+	float electronegatividad;		///< Electronegatividad
+
 	std::list<Vertex> neighbors; 	///< lista de vértices adyacentes
 
 	Colors color{ Colors::BLACK };	///< Color del vértice
@@ -110,12 +112,21 @@ public:
 
 	/* -------------------------------*/
 	/**
-	 * @brief Método para asignar el número atómico
+	 * @brief Método para asignar los electrones de valencia
 	 *
 	 * @param numero Número asignado
 	 */
 	/* -------------------------------*/
 	void set_valencia( int numero );
+
+	/* -------------------------------*/
+	/**
+	 * @brief Método para asignar los electrones de valencia
+	 *
+	 * @param numero Número asignado
+	 */
+	/* -------------------------------*/
+	void set_electronegativad( float numero );
 
 	//Getters
 
@@ -144,6 +155,15 @@ public:
 	 * @return Lista con los vecinos de un vértice
 	 */
 	/* -------------------------------*/
+	std::list<Vertex> get_neighbors();
+
+	/* -------------------------------*/
+	/**
+	 * @brief Método para obtener el numero electrones de valencia
+	 *
+	 * @return Electrones de valencia
+	 */
+	/* -------------------------------*/
 	int get_valencia();
 
 	/* -------------------------------*/
@@ -153,7 +173,7 @@ public:
 	 * @return Electrones de valencia
 	 */
 	/* -------------------------------*/
-	std::list<Vertex> get_neighbors();
+	float get_electronegatividad();
 
 	/* -------------------------------*/
 	/**
@@ -200,10 +220,21 @@ void Vertex::set_valencia( int numero )
 	this->electronesValencia = numero;
 }
 
-void Vertex::get_valencia()
+void Vertex::set_electronegativad( float numero )
+{
+	this->electronegatividad = numero;
+}
+
+float Vertex::get_electronegatividad()
+{
+	return this->electronegatividad;
+}
+
+int Vertex::get_valencia()
 {
 	return this->electronesValencia;
 }
+
 
 Vertex::Colors Vertex::get_color()
 {
@@ -390,6 +421,20 @@ void Graph::BFS(Vertex* start)
 int main()
 {
 	Graph g;
+
+	/*
+		1. Se le pide al usuario los elementos a insertar
+		2. Se guardan en un arreglo, lista, etc.
+		3. Se busca el elemento más electronegativo a excepcion del H
+		4. Se realizan los enlaces, considerando:
+			a. Los atomos de O no se enlazan entre ellos a excepción 
+				del O2, O3
+			b. Los atomos de C tienden a unirse entre ellos
+			c. En los oxiacidos el H suele unirse al O, y no a los átomos
+				centrales, excepciones H3PO3 y H3PO2
+			d. Tengan una disposición geométrica
+			e. Se complete el octeto en cada uno de ellos
+	*/
 	g.add_vertex( Vertex( "A" ) );
 	g.add_vertex( Vertex( "B" ) );
 	g.add_vertex( Vertex( "C" ) );
