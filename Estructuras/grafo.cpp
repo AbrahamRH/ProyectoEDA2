@@ -46,6 +46,8 @@ private:
 
 	int electronesValencia;			///< Electrones de Valencia
 
+	int electronesDisponibles;		///< Electrones disponibles
+
 	float electronegatividad;		///< Electronegatividad
 
 	std::list<Vertex> neighbors; 	///< lista de vértices adyacentes
@@ -168,12 +170,30 @@ public:
 
 	/* -------------------------------*/
 	/**
-	 * @brief Método para obtener el numero electrones de valencia
+	 * @brief Método para obtener el numero de electronegatividad
 	 *
-	 * @return Electrones de valencia
+	 * @return Electronegatividad
 	 */
 	/* -------------------------------*/
 	float get_electronegatividad();
+
+	/* -------------------------------*/
+	/**
+	 * @brief Método para obtener el numero de electrones disponibles
+	 *
+	 * @return electronesDisponibles
+	 */
+	/* -------------------------------*/
+	int get_electronesDisponibles();
+
+	/* -------------------------------*/
+	/**
+	 * @brief Método para disminuir el numero de electrones disponibles
+	 *
+	 * @param electrones a disminuir
+	 */
+	/* -------------------------------*/
+	void disminuirElectrones( int numero );
 
 	/* -------------------------------*/
 	/**
@@ -235,6 +255,15 @@ int Vertex::get_valencia()
 	return this->electronesValencia;
 }
 
+int Vertex::get_electronesDisponibles()
+{
+	return this->electronesDisponibles;
+}
+
+void Vertex::disminuirElectrones( int numero )
+{
+	this->electronesDisponibles-= numero;
+}
 
 Vertex::Colors Vertex::get_color()
 {
