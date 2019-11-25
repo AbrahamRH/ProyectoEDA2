@@ -1,10 +1,51 @@
 #include <iostream>
+#include <stdio.h>
 #include <string>
 
 #include "../Estructuras/grafo.h" 
+#include "../Base_de_datos/sqlite3.h"
+
+
+int print_records(void * data, int argc, char** argv, char** col_name)
+{
+    fprintf(stderr, "--- %s ---\n", (const char*)data);
+
+    for( int i = 0; i < argc; ++i ){
+      printf( "%s = %s\n", col_name[ i ], argv[ i ] ? argv[ i ] : "NULL" );
+    }
+    printf( "\n" );
+    return 0;
+
+}
+
 
 int main(){
     Graph g;
+
+    sqlite3* DataBase;
+    int rc = sqlite3_open("./Base_de_datos/elementos.sqlite3", &DataBase);
+
+    if ( rc ){
+        fprintf(stderr,"No se pudo abrir la base de datos: %s\n",sqlite3_errmsg(DataBase));
+        return(0);
+    }else{ fprintf(stderr,"Base de Datos abierta exitosamente\n"); }
+
+    char* sql = NULL;
+    char* err_msg = NULL;
+    const char* user_msg = "Callback llamada!";
+
+    rc = sqlite3_exec(DataBase, nullptr, print_records, (void*)user_msg, &err_msg );
+
+     if( rc != SQLITE_OK ){
+      fprintf( stderr, "SQL error: %s\n", err_msg );
+      sqlite3_free( err_msg );
+    } else{ fprintf( stdout, "Hecho!\n" ); }
+
+   sqlite3_close(DataBase);
+
+
+
+
     /*
 		1. Se le pide al usuario los elementos a insertar
 		2. Se guardan en un arreglo, lista, etc.
@@ -44,8 +85,8 @@ int main(){
 	g.add_edge( "E", "H" );
 	g.add_edge( "E", "A" );
 
-	g.print();
-	g.BFS(g.get_vertex("A"));
+	//g.print();
+	//g.BFS(g.get_vertex("A"));
 
     std::cout << " Saludos! ";
 
