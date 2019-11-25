@@ -56,16 +56,16 @@ public:
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Constructor de la clase Vertex
+	 * @brief Constructor de la clase Vertex
 	 *
-	 * @Param name Nombre para inicializar el vértice
+	 * @param name Nombre para inicializar el vértice
 	 */
 	/* -------------------------------*/
 	Vertex( std::string name );
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método para obtener el nombre del vértice
+	 * @brief Método para obtener el nombre del vértice
 	 *
 	 * @return
 	 */
@@ -74,16 +74,16 @@ public:
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método ppara agregar un nodo vecino a la lista del vértice
+	 * @brief Método ppara agregar un nodo vecino a la lista del vértice
 	 *
-	 * @Param v Vértice agregado a la lista
+	 * @param v Vértice agregado a la lista
 	 */
 	/* -------------------------------*/
 	void add_neighbor( Vertex v );
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método para imprimir los nodos vecinos al vértice
+	 * @brief Método para imprimir los nodos vecinos al vértice
 	 */
 	/* -------------------------------*/
 	void print_neighbors();
@@ -92,27 +92,27 @@ public:
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método para asignar un color al vértice
+	 * @brief Método para asignar un color al vértice
 	 *
-	 * @Param color Color ( estado ) asignado
+	 * @param color Color ( estado ) asignado
 	 */
 	/* -------------------------------*/
 	void set_color( Vertex::Colors color );
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método para asignar el predecesor al vértice
+	 * @brief Método para asignar el predecesor al vértice
 	 *
-	 * @Param predecesor Nombre del vértice predecesor
+	 * @param predecesor Nombre del vértice predecesor
 	 */
 	/* -------------------------------*/
 	void set_predecesor( std::string predecesor );
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método para asignar el número atómico
+	 * @brief Método para asignar el número atómico
 	 *
-	 * @Param numero Número asignado
+	 * @param numero Número asignado
 	 */
 	/* -------------------------------*/
 	void set_numero_atomico( int numero );
@@ -121,7 +121,7 @@ public:
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método para obtener el color (estado) de un vértice
+	 * @brief Método para obtener el color (estado) de un vértice
 	 *
 	 * @return Color ( estado ) de un vértice
 	 */
@@ -130,7 +130,7 @@ public:
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método para obtener el predecesor a un vértice
+	 * @brief Método para obtener el predecesor a un vértice
 	 *
 	 * @return Nombre del predecesor al vértice
 	 */
@@ -139,7 +139,7 @@ public:
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método para obtener los vecinos de un vértice
+	 * @brief Método para obtener los vecinos de un vértice
 	 *
 	 * @return Lista con los vecinos de un vértice
 	 */
@@ -148,7 +148,7 @@ public:
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método para imprimir el contendo de un vértice
+	 * @brief Método para imprimir el contendo de un vértice
 	 */
 	/* -------------------------------*/
 	void print();
@@ -229,16 +229,16 @@ private:
 public:
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Constructor de la clase Graph
+	 * @brief Constructor de la clase Graph
 	 */
 	/* -------------------------------*/
 	Graph();
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método para agregar un vértice al grafo
+	 * @brief Método para agregar un vértice al grafo
 	 *
-	 * @Param v Vétice que sera agregado al grafo
+	 * @param v Vétice que sera agregado al grafo
 	 *
 	 * @return True: Si se agrego el vértice al grafo False: en caso contrario
 	 */
@@ -247,10 +247,10 @@ public:
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método para agregar las aristas a los vértices
+	 * @brief Método para agregar las aristas a los vértices
 	 *
-	 * @Param edge1 Nodo de la arista
-	 * @Param edge2 Nodo de la arista
+	 * @param edge1 Nodo de la arista
+	 * @param edge2 Nodo de la arista
 	 *
 	 * @return True: si se agrego la arista False: en caso contrario
 	 */
@@ -259,25 +259,25 @@ public:
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método ara la impresión del grafo
+	 * @brief Método ara la impresión del grafo
 	 */
 	/* -------------------------------*/
 	void print();
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Algoritmo para el recorrido del grafo Breadth-first search
+	 * @brief Algoritmo para el recorrido del grafo Breadth-first search
 	 *
-	 * @Param start Apuntador al vértice de inicio del recorrido
+	 * @param start Apuntador al vértice de inicio del recorrido
 	 */
 	/* -------------------------------*/
 	void BFS( Vertex* start );
 
 	/* -------------------------------*/
 	/**
-	 * @Synopsis Método para obtener un vértice del grafo
+	 * @brief Método para obtener un vértice del grafo
 	 *
-	 * @Param name Nombre del vértice que se desea obtener
+	 * @param name Nombre del vértice que se desea obtener
 	 *
 	 * @return Apuntador a el vértice
 	 */
