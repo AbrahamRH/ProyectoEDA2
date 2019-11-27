@@ -63,6 +63,7 @@ void CreateTable()
 	char* query = "DROP TABLE IF EXISTS elementos; "
 				  "CREATE TABLE elementos( "
 				  "numero_atomico INTERGER PRIMARY KEY NOT NULL,"
+				  "electrones_disponibles INTEGER KEY NOT NULL,"
 				  "nombre TEXT NOT NULL,"
 				  "simbolo TEXT NOT NULL);"
 				  ;
@@ -103,12 +104,12 @@ void InsertTable()
 
 	/*Consulta para la inserción de datos a la tabla*/
 	char* query = "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 1, 'Hidrógeno', 'H');"
-				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 2, 'Helio',     'He');"
-				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 8, 'Oxígeno',   'O');"
-				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 7, 'Nitrógeno', 'N');"
-				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 6, 'Carbono',	'C');"
-				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 9, 'Flúor',		'F');"
-				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 11, 'Sodio',	'Na');"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 2, 0, 'Helio',     'He');"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 8, 2, 'Oxígeno',   'O');"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 7, 3, 'Nitrógeno', 'N');"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 6, 4, 'Carbono',	'C');"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 9, 1, 'Flúor',		'F');"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 11, 7, 'Sodio',	'Na');"
 				  ;
 
 	char* err_msg = NULL;
