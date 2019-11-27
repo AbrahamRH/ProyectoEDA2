@@ -103,7 +103,7 @@ void InsertTable()
 	}
 
 	/*Consulta para la inserción de datos a la tabla*/
-	char* query = "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 1, 'Hidrógeno', 'H');"
+	char* query = "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 1,7 'Hidrógeno', 'H');"
 				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 2, 0, 'Helio',     'He');"
 				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 8, 2, 'Oxígeno',   'O');"
 				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 7, 3, 'Nitrógeno', 'N');"
