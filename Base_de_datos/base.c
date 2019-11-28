@@ -23,42 +23,11 @@
  * @date 2019-11-23
  */
 
-
 #include <stdio.h>
 #include "sqlite3.h"
+#include <stdio.h>
 
-void CreateTable();
-
-/* -------------------------------*/
-/**
- * @brief Función para la inseción de elementos en la base de datos
- */
-/* -------------------------------*/
-void InsertTable();
-
-
-/* -------------------------------*/
-/**
- * @brief Función para obtener los datos de una tabla
- */
-/* -------------------------------*/
-void GetTable();
-
-
-/* -------------------------------*/
-/**
- * @brief Callback para las consultas (query)
- *
- * @param data Campo de uso para el usuario. El usuario la usa como quiera.
- * @param argc Número de columnas encontradas
- * @param argv Valor (como texto) de cada columna
- * @param col_name Nombre (en la base de datos) de cada columna
- *
- * @return 0: ok, !0: algún error
- */
-/* -------------------------------*/
-int callback( void* data, int argc, char** argv, char** col_name );
-
+#if 0
 //------------------------------------
 //			Driver Program
 //------------------------------------
@@ -68,12 +37,9 @@ int main()
 	InsertTable();
 	GetTable();
 }
+#endif
 
-/* -------------------------------*/
-/**
- * @brief Función para la creación de la tabla de Elementos
- */
-/* -------------------------------*/
+
 void CreateTable()
 {
 	//apuntador a la base de datos
