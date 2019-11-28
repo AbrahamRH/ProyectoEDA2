@@ -28,7 +28,36 @@
 #include "sqlite3.h"
 
 void CreateTable();
+
+/* -------------------------------*/
+/**
+ * @brief Función para la inseción de elementos en la base de datos
+ */
+/* -------------------------------*/
 void InsertTable();
+
+
+/* -------------------------------*/
+/**
+ * @brief Función para obtener los datos de una tabla
+ */
+/* -------------------------------*/
+void GetTable();
+
+
+/* -------------------------------*/
+/**
+ * @brief Callback para las consultas (query)
+ *
+ * @param data Campo de uso para el usuario. El usuario la usa como quiera.
+ * @param argc Número de columnas encontradas
+ * @param argv Valor (como texto) de cada columna
+ * @param col_name Nombre (en la base de datos) de cada columna
+ *
+ * @return 0: ok, !0: algún error
+ */
+/* -------------------------------*/
+int callback( void* data, int argc, char** argv, char** col_name );
 
 //------------------------------------
 //			Driver Program
@@ -37,11 +66,12 @@ int main()
 {
 	CreateTable();
 	InsertTable();
+	GetTable();
 }
 
 /* -------------------------------*/
 /**
- * @Synopsis Función para la creación de la tabla de Elementos
+ * @brief Función para la creación de la tabla de Elementos
  */
 /* -------------------------------*/
 void CreateTable()
@@ -82,11 +112,6 @@ void CreateTable()
 	sqlite3_close(db);
 }
 
-/* -------------------------------*/
-/**
- * @Synopsis Función para la inseción de elementos en la base de datos
- */
-/* -------------------------------*/
 void InsertTable()
 {
 	//apuntador a la base de datos
@@ -103,13 +128,13 @@ void InsertTable()
 	}
 
 	/*Consulta para la inserción de datos a la tabla*/
-	char* query = "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 1,1, 'Hidrógeno', 'H');"
-				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 2, 0, 'Helio',     'He');"
-				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 8, 6, 'Oxígeno',   'O');"
-				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 7, 5, 'Nitrógeno', 'N');"
-				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 6, 4, 'Carbono',	'C');"
-				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 9, 7, 'Flúor',		'F');"
-				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 11, 1, 'Sodio',	'Na');"
+	char* query = "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 1,1, 'Hidrógeno', 'H' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 2, 0, 'Helio',    'He');"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 8, 6, 'Oxígeno',  'O' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 7, 5, 'Nitrógeno','N' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 6, 4, 'Carbono',	 'C' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 9, 7, 'Flúor',	 'F' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 11, 1, 'Sodio',	 'Na');"
 				  ;
 
 	char* err_msg = NULL;
@@ -132,3 +157,40 @@ void InsertTable()
 
 }
 
+
+int callback( void* data, int argc, char** argv, char** col_name )
+{
+	fprintf( stderr, "--- %s ---\n", (const char*)data );
+
+	// mensaje del usuario
+	for( int i = 0; i < argc; ++i ){
+		printf( "%s = %s\n", col_name[ i ], argv[ i ] ? argv[ i ] : "NULL" );
+	}
+	printf( "\n" );
+	return 0;
+}
+
+
+void GetTable()
+{
+	sqlite3 *db;
+
+	int rc = sqlite3_open("elementos.sqlite3", &db);
+
+	if( rc ) {
+		fprintf(stderr, "Error al abrir la base de datos:  %s\n", sqlite3_errmsg(db));
+		return;
+	} else {
+		fprintf(stderr, "Base de datos abierta satisfactoriamente -- \n");
+	}
+	char* sql = "SELECT * FROM elementos;";
+	char* err_msg = NULL;
+	const char* user_msg = "Callback llamada";
+	rc = sqlite3_exec( db, sql, callback, (void*)user_msg, &err_msg );
+	if( rc != SQLITE_OK ){
+		fprintf( stderr, "SQL error: %s\n", err_msg );
+		sqlite3_free( err_msg );
+	} else{ fprintf( stdout, "Hecho!\n" ); }
+	sqlite3_close(db);
+
+}

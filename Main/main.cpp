@@ -2,9 +2,10 @@
 #include <stdio.h>
 #include <string>
 
-#include "../Estructuras/grafo.h" 
+#include "../Estructuras/grafo.hpp"
 #include "../Base_de_datos/sqlite3.h"
 
+using namespace GraphDS;
 
 int print_records(void * data, int argc, char** argv, char** col_name)
 {
@@ -21,6 +22,7 @@ int print_records(void * data, int argc, char** argv, char** col_name)
 
 int main(){
     Graph g;
+	/*
 
     sqlite3* DataBase;
     int rc = sqlite3_open("./Base_de_datos/elementos.sqlite3", &DataBase);
@@ -44,14 +46,14 @@ int main(){
    sqlite3_close(DataBase);
 
 
-
+*/
 
     /*
 		1. Se le pide al usuario los elementos a insertar
 		2. Se guardan en un arreglo, lista, etc.
 		3. Se busca el elemento más electronegativo a excepcion del H
 		4. Se realizan los enlaces, considerando:
-			a. Los atomos de O no se enlazan entre ellos a excepción 
+			a. Los atomos de O no se enlazan entre ellos a excepción
 				del O2, O3
 			b. Los atomos de C tienden a unirse entre ellos
 			c. En los oxiacidos el H suele unirse al O, y no a los átomos
