@@ -1,0 +1,4 @@
+
+Instruccion de compilación desde la carpeta actual
+g++ -Wall -std=c++11 main.cpp -o main.out ../Estructuras/grafo.hpp ../Estructuras/grafo.cpp ../Base_de_datos/base.c
+../Base_de_datos/base.h ../Base_de_datos/sqlite3.o -ldl -lpthread

@@ -17,9 +17,9 @@
  */
 
 /**
- * @file create.c
- * @Synopsis Programa para la creación e insercion de elementos en una base de datos
- * @version 1.0
+ * @file base.c
+ * @brief Programa que contiene el las funciones necesarias para el manejo de la base de datos
+ * @version 2.0
  * @date 2019-11-23
  */
 

@@ -16,6 +16,14 @@
  *
  */
 
+/**
+ * @file base.h
+ * @brief Libreria encargada de contener los prototipos de función del programa base.c
+ * @version 1.0
+ * @date 2019-11-28
+ */
+
+
 /* -------------------------------*/
 /**
  * @brief Función para la creación de la tabla de Elementos
