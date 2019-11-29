@@ -17,19 +17,17 @@
  */
 
 /**
- * @file create.c
- * @Synopsis Programa para la creación e insercion de elementos en una base de datos
- * @version 1.0
+ * @file base.c
+ * @brief Programa que contiene el las funciones necesarias para el manejo de la base de datos
+ * @version 2.0
  * @date 2019-11-23
  */
 
-
 #include <stdio.h>
 #include "sqlite3.h"
+#include <stdio.h>
 
-void CreateTable();
-void InsertTable();
-
+#if 0
 //------------------------------------
 //			Driver Program
 //------------------------------------
@@ -37,13 +35,11 @@ int main()
 {
 	CreateTable();
 	InsertTable();
+	GetTable();
 }
+#endif
 
-/* -------------------------------*/
-/**
- * @Synopsis Función para la creación de la tabla de Elementos
- */
-/* -------------------------------*/
+
 void CreateTable()
 {
 	//apuntador a la base de datos
@@ -63,6 +59,7 @@ void CreateTable()
 	char* query = "DROP TABLE IF EXISTS elementos; "
 				  "CREATE TABLE elementos( "
 				  "numero_atomico INTERGER PRIMARY KEY NOT NULL,"
+				  "electrones_disponibles INTEGER KEY NOT NULL,"
 				  "nombre TEXT NOT NULL,"
 				  "simbolo TEXT NOT NULL);"
 				  ;
@@ -81,11 +78,6 @@ void CreateTable()
 	sqlite3_close(db);
 }
 
-/* -------------------------------*/
-/**
- * @Synopsis Función para la inseción de elementos en la base de datos
- */
-/* -------------------------------*/
 void InsertTable()
 {
 	//apuntador a la base de datos
@@ -102,13 +94,13 @@ void InsertTable()
 	}
 
 	/*Consulta para la inserción de datos a la tabla*/
-	char* query = "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 1, 'Hidrógeno', 'H');"
-				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 2, 'Helio',     'He');"
-				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 8, 'Oxígeno',   'O');"
-				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 7, 'Nitrógeno', 'N');"
-				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 6, 'Carbono',	'C');"
-				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 9, 'Flúor',		'F');"
-				  "INSERT INTO elementos( numero_atomico, nombre, simbolo) VALUES ( 11, 'Sodio',	'Na');"
+	char* query = "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 1,1, 'Hidrógeno', 'H' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 2, 0, 'Helio',    'He');"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 8, 6, 'Oxígeno',  'O' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 7, 5, 'Nitrógeno','N' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 6, 4, 'Carbono',	 'C' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 9, 7, 'Flúor',	 'F' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 11, 1, 'Sodio',	 'Na');"
 				  ;
 
 	char* err_msg = NULL;
@@ -131,3 +123,40 @@ void InsertTable()
 
 }
 
+
+int callback( void* data, int argc, char** argv, char** col_name )
+{
+	fprintf( stderr, "--- %s ---\n", (const char*)data );
+
+	// mensaje del usuario
+	for( int i = 0; i < argc; ++i ){
+		printf( "%s = %s\n", col_name[ i ], argv[ i ] ? argv[ i ] : "NULL" );
+	}
+	printf( "\n" );
+	return 0;
+}
+
+
+void GetTable()
+{
+	sqlite3 *db;
+
+	int rc = sqlite3_open("elementos.sqlite3", &db);
+
+	if( rc ) {
+		fprintf(stderr, "Error al abrir la base de datos:  %s\n", sqlite3_errmsg(db));
+		return;
+	} else {
+		fprintf(stderr, "Base de datos abierta satisfactoriamente -- \n");
+	}
+	char* sql = "SELECT * FROM elementos;";
+	char* err_msg = NULL;
+	const char* user_msg = "Callback llamada";
+	rc = sqlite3_exec( db, sql, callback, (void*)user_msg, &err_msg );
+	if( rc != SQLITE_OK ){
+		fprintf( stderr, "SQL error: %s\n", err_msg );
+		sqlite3_free( err_msg );
+	} else{ fprintf( stdout, "Hecho!\n" ); }
+	sqlite3_close(db);
+
+}
