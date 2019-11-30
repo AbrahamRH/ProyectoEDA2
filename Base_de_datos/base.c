@@ -25,6 +25,7 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "sqlite3.h"
 #include "base.h"
@@ -181,7 +182,7 @@ int callback2( void* data, int argc, char** argv, char** col_name )
  * 2 nom
  * 3 sim
 */
-	elemento* query;
+	elemento* query = (elemento*) malloc(sizeof(elemento) );
 	
 
 	//for( int i = 0; i < argc; ++i ){
@@ -191,7 +192,10 @@ int callback2( void* data, int argc, char** argv, char** col_name )
 		query->simbolo = argv[3];
 		query->nombre = argv[2];
 
-		data = (void*) query;
+		
+
+		data = (elemento*)query;
+		fprintf( stdout, "--- %s ---\n", ((elemento*)data)->nombre );  
 
 	//}
 	printf( "\n" );
@@ -217,16 +221,18 @@ elemento* GetElement(char* nombre ){
 	char* err_msg = NULL;
 	const char* user_msg = "Callback llamada";
 
-	elemento* valores;
+	elemento* valores = (elemento*) malloc(sizeof(elemento) );
 
 
-	rc = sqlite3_exec( db, sql, callback2, (void*)valores, &err_msg );
+	rc = sqlite3_exec( db, sql,  callback2, (void*)valores, &err_msg );
 	if( rc != SQLITE_OK ){
 		fprintf( stderr, "SQL error: %s\n", err_msg );
 		sqlite3_free( err_msg );
 	} else{ fprintf( stdout, "Hecho!\n" ); }
 	sqlite3_close(db);
 
+
+	fprintf( stdout, "--- %s ---\n", valores->nombre );
 	return valores;
 	
 }

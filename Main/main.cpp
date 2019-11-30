@@ -62,12 +62,13 @@ int main()
 
 	char* name = "Li";
 
-	elemento* valores = GetElement(name);
+	elemento* valores = (elemento*) malloc(sizeof(elemento) );
 	
-	std::cout << valores->nombre;
-
-	std::cout << "Los elementos que se pueden seleccionar son: " << std::endl;
-
+	valores = GetElement(name);
+	
+	fprintf(stderr,"%s", valores->nombre);
+	std::cout << valores ; 
+	
 
 }
 
