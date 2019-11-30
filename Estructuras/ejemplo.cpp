@@ -21,13 +21,13 @@
  * @file ejemplo.cpp
  * @brief Ejemplo del|uso de una libreria estática
  * @author AbrahamRH
- * @version 1
+ * @version 1.2
  * @date 2019-11-27
  */
 
 
 #include "grafo.hpp"
-#include ""
+#include "Algoritmos.hpp"
 
 //Para un uso más facil de las estructuras
 using namespace GraphDS;
@@ -57,10 +57,31 @@ int main()
 	h.print();
 	h.BFS(h.get_vertex("C"));
 
+	printf("Nuevas funciones ");
+	int arr[5];
+	arr[0] = 5;
+	arr[1] = 4;
+	arr[2] = 32;
+	arr[3] = 12;
+	arr[4] = 1;
+
+	for ( size_t i = 0 ; i < 5 ; ++i) printf("%3d",arr[i]); ;
+	std::cout << "" <<std::endl;
+
+	QuickSort(arr , 0 , 5);
+
+	for ( size_t i = 0 ; i < 5 ; ++i) printf("%3d",arr[i]); ;
+	std::cout << "" <<std::endl;
+
+	size_t* index = NULL;
+
+	std::cout << "Busqueda del numero 5" << std::endl;
 
 
-
-
-
-
+	if(BusquedaBinaria(arr, 5, 5, index)){
+		//std::cout << "El valor se encontro en el indice: " + *index << std::endl;
+		printf("el valor 5 se encontro en el indice %ld",*index);
+	}else{
+		std::cout << "No se encontro el valor" << std::endl;
+	}
 }
