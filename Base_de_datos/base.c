@@ -23,10 +23,12 @@
  * @date 2019-11-23
  */
 
+
 #include <stdio.h>
+#include <string.h>
 #include "sqlite3.h"
 #include "base.h"
-#include <stdio.h>
+
 
 #if 0
 //------------------------------------
@@ -39,6 +41,9 @@ int main()
 	GetTable();
 }
 #endif
+
+
+
 
 
 void CreateTable()
@@ -138,6 +143,7 @@ int callback( void* data, int argc, char** argv, char** col_name )
 }
 
 
+
 void GetTable()
 {
 	sqlite3 *db;
@@ -160,4 +166,67 @@ void GetTable()
 	} else{ fprintf( stdout, "Hecho!\n" ); }
 	sqlite3_close(db);
 
+}
+
+
+int callback2( void* data, int argc, char** argv, char** col_name )
+{
+	
+	
+	fprintf( stderr, "--- %s ---\n", "Elemento" );
+
+/**
+ * 0 val
+ * 1 num atom
+ * 2 nom
+ * 3 sim
+*/
+	elemento* query;
+	
+
+	//for( int i = 0; i < argc; ++i ){
+		//printf( "%s = %s\n", col_name[ i ], argv[ i ] ? argv[ i ] : "NULL" );
+		query->val = argv[0];
+		query->num_atom = argv[1];
+		query->simbolo = argv[3];
+		query->nombre = argv[2];
+
+		data = (void*) query;
+
+	//}
+	printf( "\n" );
+	return 0;
+}
+
+
+elemento* GetElement(char* nombre ){
+	sqlite3* db;
+	
+	int rc = sqlite3_open("elementos.sqlite3",&db);
+
+	if( rc ){
+		fprintf(stderr, "Error al arbrir la base de datos: %s\n", sqlite3_errmsg(db));
+		return 0;
+	} else {
+		fprintf(stderr, "Base de datos abierta satisfactoriamente -- \n");
+	}
+
+	char* sqlins = "SELECT * FROM elementos WHERE simbolo=";
+	//strcat(sqlins,'"'+nombre+'"'+';');
+	char* sql =  "SELECT * FROM elementos WHERE simbolo='Bi'";
+	char* err_msg = NULL;
+	const char* user_msg = "Callback llamada";
+
+	elemento* valores;
+
+
+	rc = sqlite3_exec( db, sql, callback2, (void*)valores, &err_msg );
+	if( rc != SQLITE_OK ){
+		fprintf( stderr, "SQL error: %s\n", err_msg );
+		sqlite3_free( err_msg );
+	} else{ fprintf( stdout, "Hecho!\n" ); }
+	sqlite3_close(db);
+
+	return valores;
+	
 }

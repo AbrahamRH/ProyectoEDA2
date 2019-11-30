@@ -39,6 +39,8 @@ int main()
 {
     Graph g;
 	
+	Vertex v = Vertex("Li");
+	
 
     /*
 		1. Se le pide al usuario los elementos a insertar
@@ -56,8 +58,13 @@ int main()
 
 	//CreateTable();
 	//InsertTable();
-	GetTable();
+	//GetTable();
 
+	char* name = "Li";
+
+	elemento* valores = GetElement(name);
+	
+	std::cout << valores->nombre;
 
 	std::cout << "Los elementos que se pueden seleccionar son: " << std::endl;
 

@@ -24,6 +24,14 @@
  */
 
 
+typedef struct {
+	char* val;
+	char* num_atom;
+	char* nombre;
+	char* simbolo;
+} elemento ;
+
+
 /* -------------------------------*/
 /**
  * @brief Función para la creación de la tabla de Elementos
@@ -49,6 +57,15 @@ void GetTable();
 
 /* -------------------------------*/
 /**
+ * @brief Función para obtener un elemento en específico de la tabla
+ * @param nombre Nombre del elemento a buscar. 
+ */
+/* -------------------------------*/
+elemento* GetElement(char* nombre );
+
+
+/* -------------------------------*/
+/**
  * @brief Callback para las consultas (query)
  *
  * @param data Campo de uso para el usuario. El usuario la usa como quiera.
@@ -61,3 +78,4 @@ void GetTable();
 /* -------------------------------*/
 int callback( void* data, int argc, char** argv, char** col_name );
 
+int callback2( void* data, int argc, char** argv, char** col_name );
