@@ -38,6 +38,7 @@ using namespace GraphDS;
 int main()
 {
     Graph g;
+	
 
     /*
 		1. Se le pide al usuario los elementos a insertar
@@ -53,9 +54,10 @@ int main()
 			e. Se complete el octeto en cada uno de ellos
 	*/
 
-	CreateTable();
-	InsertTable();
-	//GetTable();
+	//CreateTable();
+	//InsertTable();
+	GetTable();
+
 
 	std::cout << "Los elementos que se pueden seleccionar son: " << std::endl;
 

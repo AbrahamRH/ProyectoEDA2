@@ -25,6 +25,7 @@
 
 #include <stdio.h>
 #include "sqlite3.h"
+#include "base.h"
 #include <stdio.h>
 
 #if 0
