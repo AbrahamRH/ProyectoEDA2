@@ -221,12 +221,10 @@ elemento* GetElement(char* nombre ){
 	} else {
 		fprintf(stderr, "Base de datos abierta satisfactoriamente -- \n");
 	}
-
-	char* sqlins = (char*)"SELECT * FROM elementos WHERE simbolo=";
-	//strcat(sqlins,'"'+nombre+'"'+';');
-	char* sql = (char*) "SELECT * FROM elementos WHERE simbolo='C'";
+	char sql[44];
+	char* sql1 = (char*) "SELECT * FROM elementos WHERE simbolo=";
+	printf("%s\n", sql);
 	char* err_msg = NULL;
-	const char* user_msg =(char*) "Callback 2 llamada";
 
 	elemento* valores = (elemento*) malloc(sizeof(elemento) );
 
