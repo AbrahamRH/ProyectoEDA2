@@ -120,10 +120,9 @@ void armar( elemento *elementos[], size_t tam, Graph &g )
 			}
 		}
 
-
+		char b[10];
+		char c[10];
 		if( repetidos[indice_base].second >=2 && indice_base > 0){
-			char b[10];
-			char c[10];
 			sprintf(c,"%s%d",base->nombre,0);
 			g.add_vertex( Vertex(c) );
 			for(int i  = 1; i <repetidos[indice_base].second; i+=2){
@@ -135,6 +134,7 @@ void armar( elemento *elementos[], size_t tam, Graph &g )
 			sprintf(c,"%s%d",base->nombre,0);
 			g.add_edge(base->nombre,c);
 		}
+
 		int e_faltantes = 8 - atoi(repetidos[indice_base-1].first->val); 
 		if( atoi(base->val) < 8 && indice_base>0){
 			int numero_enlaces = repetidos[indice_base-1].second;
@@ -145,17 +145,21 @@ void armar( elemento *elementos[], size_t tam, Graph &g )
 					g.add_edge(base->nombre,repetidos[indice_base-1].first->nombre);
 				}
 			}
-		}
-		else{
-			int numero_enlaces = repetidos[indice_base+1].second;
-			if( numero_enlaces<=4 || e_faltantes <=  atoi(repetidos[indice_base+1].first->val)){
-				for (int i = 0; i <numero_enlaces ; ++i)
+				for (int i = 0; i <=(repetidos[indice_base+1].second) ; i+=2)
 				{
-					g.add_vertex( Vertex(repetidos[indice_base+1].first->nombre));
-					g.add_edge(base->nombre,repetidos[indice_base+1].first->nombre);
+					sprintf(c,"%s%d",base->nombre,0);
+					sprintf(b,"%s%d",repetidos[indice_base+1].first->nombre,i);
+					g.add_vertex( Vertex(b));
+					g.add_edge(c,b);
+					sprintf(c,"%s%d",base->nombre,repetidos[indice_base].second-2);
+					sprintf(b,"%s%d",repetidos[indice_base+1].first->nombre,i+1);
+					g.add_vertex( Vertex(b));
+					g.add_edge(c,b);
+
 				}
-			}
+			
 		}
+	
 
 		//g.print();
 
