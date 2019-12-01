@@ -183,10 +183,6 @@ int callback2( void* data, int argc, char** argv, char** col_name )
  * 2 nom
  * 3 sim
 */
-	if(argc == 0 ){
-		printf("No hay elementos\n");
-	}
-	else{
 	elemento *query =(elemento*) malloc(sizeof(elemento));
 
 	for( int i = 0; i < argc; ++i ){
@@ -206,7 +202,6 @@ int callback2( void* data, int argc, char** argv, char** col_name )
 	//}
 	printf( "\n" );
 	free(query);
-	}
 	return 0;
 }
 
@@ -223,7 +218,7 @@ elemento* GetElement(char* nombre ){
 	}
 	char sql[44];
 	char* sql1 = (char*) "SELECT * FROM elementos WHERE simbolo=";
-	printf("%s\n", sql);
+	sprintf(sql,"%s%s%s%s",sql1,"\"",nombre,"\"");
 	char* err_msg = NULL;
 
 	elemento* valores = (elemento*) malloc(sizeof(elemento) );
