@@ -68,6 +68,7 @@ void CreateTable()
 				  "CREATE TABLE elementos( "
 				  "numero_atomico INTERGER PRIMARY KEY NOT NULL,"
 				  "electrones_disponibles INTEGER KEY NOT NULL,"
+				  "electronegatividad  REAL KEY NOT NULL,"
 				  "nombre TEXT NOT NULL,"
 				  "simbolo TEXT NOT NULL);"
 				  ;
@@ -102,13 +103,13 @@ void InsertTable()
 	}
 
 	/*Consulta para la inserción de datos a la tabla*/
-	char* query = (char*)"INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 1,1, 'Hidrógeno', 'H' );"
-				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 2, 0, 'Helio',    'He');"
-				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 8, 6, 'Oxígeno',  'O' );"
-				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 7, 5, 'Nitrógeno','N' );"
-				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 6, 4, 'Carbono',	 'C' );"
-				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 9, 7, 'Flúor',	 'F' );"
-				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 11, 1, 'Sodio',	 'Na');"
+	char* query = (char*)"INSERT INTO elementos( numero_atomico,electrones_disponibles,electronegatividad, nombre, simbolo) VALUES ( 1,1,2.1, 'Hidrógeno', 'H' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles,electronegatividad, nombre, simbolo) VALUES ( 2, 0,0, 'Helio',    'He');"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles,electronegatividad, nombre, simbolo) VALUES ( 8, 6,3.5, 'Oxígeno',  'O' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles,electronegatividad, nombre, simbolo) VALUES ( 7, 5,3.0, 'Nitrógeno','N' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles,electronegatividad, nombre, simbolo) VALUES ( 6, 4,2.5, 'Carbono',	 'C' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles,electronegatividad, nombre, simbolo) VALUES ( 9, 7,4.0, 'Flúor',	 'F' );"
+				  "INSERT INTO elementos( numero_atomico,electrones_disponibles,electronegatividad, nombre, simbolo) VALUES ( 11, 1,0.9, 'Sodio',	 'Na');"
 				  ;
 
 	char* err_msg = NULL;
@@ -175,7 +176,7 @@ int callback2( void* data, int argc, char** argv, char** col_name )
 {
 	
 	
-	fprintf( stderr, "--- %s ---\n", "Informacion del Elemento" );
+	fprintf( stderr, "--- %s ---\n", "Elemento" );
 
 /**
  * 0 num atom
@@ -190,15 +191,15 @@ int callback2( void* data, int argc, char** argv, char** col_name )
 	}
 		query->num_atom =(char *) malloc(1 + strlen(argv[0]));
 		query->val =(char *) malloc(1 + strlen(argv[1]));
-		query->simbolo =(char *) malloc(1 + strlen(argv[3]));
-		query->nombre =(char *) malloc(1 + strlen(argv[2]));
-		query->e_negatividad = (char*) malloc(1+ strlen(argv[4]));
+		query->electronegatividad = (char*) malloc(1+strlen(argv[2]));
+		query->simbolo =(char *) malloc(1 + strlen(argv[4]));
+		query->nombre =(char *) malloc(1 + strlen(argv[3]));
 
 		memcpy(query->num_atom, argv[ 0 ], 1+strlen(argv[0]));
 		memcpy(query->val , argv[ 1 ], 1+strlen(argv[1]));
-		memcpy(query->simbolo , argv[ 3 ], 1+strlen(argv[3]));
-		memcpy(query->nombre , argv[ 2 ], 1+strlen(argv[2]));
-		memcpy(query->e_negatividad, argv[4], 1+strlen(argv[4]) );
+		memcpy(query->electronegatividad,argv[2], 1+strlen(argv[2]));
+		memcpy(query->simbolo , argv[ 4 ], 1+strlen(argv[4]));
+		memcpy(query->nombre , argv[ 3 ], 1+strlen(argv[3]));
 
 		memcpy(data,query,sizeof(elemento));
 	//}
@@ -207,7 +208,7 @@ int callback2( void* data, int argc, char** argv, char** col_name )
 	return 0;
 }
 
-elemento* GetElement(const char* nombre ){
+elemento* GetElement(char* nombre ){
 	sqlite3* db;
 	
 	int rc = sqlite3_open("elementos.sqlite3",&db);
@@ -220,9 +221,7 @@ elemento* GetElement(const char* nombre ){
 	}
 	char sql[44];
 	char* sql1 = (char*) "SELECT * FROM elementos WHERE simbolo=";
-	sprintf(sql,"%s%s%s%s",sql1,"\'",nombre,"\'");
-	//printf("%s\n", sql);
-	
+	sprintf(sql,"%s%s%s%s",sql1,"\"",nombre,"\"");
 	char* err_msg = NULL;
 
 	elemento* valores = (elemento*) malloc(sizeof(elemento) );
