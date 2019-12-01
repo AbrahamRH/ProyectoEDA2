@@ -25,61 +25,75 @@
 
 #include "Algoritmos.hpp"
 
-void QuickSort( int elementos[], size_t first, size_t last)
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
+
+void QuickSort( std::vector<elemento*> elementos, size_t first, size_t last)
 {
+	std::cout << "LLAMADA INICIAL: " << std::endl ;
 	size_t mid = ( first + last ) / 2;
-	int piv = elementos[ mid ];
+	elemento* piv = elementos[ mid ];
+	std::cout << "ASIGNAR PIVOTE: "<< std::endl ;
 	size_t x0 = first;
 	size_t x1 = last;
 
 	while( x0 <= x1 ){
-		while( elementos[ x0 ] < piv )
+		std::cout << "PRIMERA COMP: " << std::endl ;
+		while( atof(elementos[ x0 ]->e_negatividad) < atof(piv->e_negatividad) )
 			++x0;
-		while( elementos[ x1 ] > piv )
+		std::cout << "SEGUNDA COMP: " << std::endl ;			
+		while( atof(elementos[ x1 ]->e_negatividad) > atof(piv->e_negatividad) )
 			--x1;
 		if( x0 <= x1 ){
-			swap( &elementos[ x0 ], &elementos[ x1 ] );
+
+			std::cout << "SWAP: " << std::endl ;
+			swap( elementos[x0], elementos[x1] );
+			
 			++x0;
 			--x1;
 		}
 	}
 	if( first < x1)
+	std::cout << "LLAMADA REC IZQ: " << std::endl;
 		QuickSort( elementos, first, x1 );
 	if( x0 < last )
+	std::cout << "LLAMADA REC DER: " << std::endl;
 		QuickSort( elementos, x0, last );
 }
 
-void swap(int* x ,int* y)
+void swap(elemento* x ,elemento* y)
 {
-	int tmp;
+	elemento tmp;
 	tmp = *x;
 	*x  = *y;
 	*y  = tmp;
 }
 
-
-bool BusquedaBinariaR(int elementos[], size_t inf, size_t sup, int* key, size_t* index)
+//HAY QUE AGREGAR UN CRITERIO DE COMPARACION AQUI.
+bool BusquedaBinariaR(std::vector<elemento*> elementos, size_t inf, size_t sup, elemento* key, size_t* index)
 {
     size_t centro = (sup + inf)/2;
     bool found = false;
 
-    if( elementos[ centro ] == *key ){
+    if( elementos[ centro ] == key ){
 		*index = centro;
 		found = true;
     }
     if( sup == inf)
 		return false;
 
-    if( *key < elementos[ centro ] )
+    if( key < elementos[ centro ] )
 		found = BusquedaBinariaR( elementos, inf, centro, key, index);
-    else if( elementos[ centro ] > *key )
+    else if( elementos[ centro ] > key )
 		found = BusquedaBinariaR( elementos, centro + 1, sup, key, index);
 
     return found;
 }
 
 
-bool BusquedaBinaria(int elementos[], size_t len, int key, size_t* index)
+bool BusquedaBinaria(std::vector<elemento*> elementos, size_t len, elemento key, size_t* index)
 {
     return BusquedaBinariaR( elementos, 0, len, &key, index);
 }

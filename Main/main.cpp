@@ -29,8 +29,10 @@
 #include <string>
 
 #include "../Estructuras/grafo.hpp"
-#include "../Base_de_datos/sqlite3.h"
 #include "../Base_de_datos/base.h"
+#include "../Estructuras/Algoritmos.hpp"
+#include "../Base_de_datos/sqlite3.h"
+
 
 using namespace GraphDS;
 
@@ -68,7 +70,7 @@ int main()
 	std::cin >> n;
 	
 
-	std::list<elemento*> valores;
+	std::vector<elemento*> valores;
 	std::list<Vertex> nodos;
 	std::vector<int> asd;
 
@@ -79,7 +81,7 @@ int main()
 		valores.push_back( GetElement( input.c_str() ) );
 	}
 	
-	
+	QuickSort( valores, 0, n);
 
 
 	//fprintf(stderr,"%s", valores.at(0)->nombre);

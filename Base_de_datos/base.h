@@ -24,12 +24,7 @@
  */
 
 
-typedef struct {
-	char* val;
-	char* num_atom;
-	char* nombre;
-	char* simbolo;
-} elemento ;
+#include "../Estructuras/elemento.h"
 
 
 /* -------------------------------*/

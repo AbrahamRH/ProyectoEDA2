@@ -24,20 +24,21 @@
  */
 
 #include <iostream>
+#include "elemento.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <vector>
 
 /* -------------------------------*/
 /**
  * @brief Algoritmo de ordenamiento quicksort
  *
- * @param elementos[] Colección de elementos a ordenar
+ * @param elementos Colección de elementos a ordenar
  * @param first Indice a la primer posición de arreglo
  * @param last  Indice a la posición final del arreglo
  */
 /* -------------------------------*/
-void QuickSort(int elementos[] ,size_t first, size_t last);
+void QuickSort(std::vector<elemento*> elementos ,size_t first, size_t last);
 
 /* -------------------------------*/
 /**
@@ -47,7 +48,7 @@ void QuickSort(int elementos[] ,size_t first, size_t last);
  * @param y Variable a intercambiar 2
  */
 /* -------------------------------*/
-void swap(int* x , int* y);
+void swap(elemento* x , elemento* y);
 
 /* -------------------------------*/
 /**
@@ -61,7 +62,7 @@ void swap(int* x , int* y);
  * @return True: Si el elemento fue encontrado. False: en caso contrario
  */
 /* -------------------------------*/
-bool BusquedaBinaria(int elementos[], size_t len, int key, size_t* index);
+bool BusquedaBinaria(std::vector<elemento*> elementos[], size_t len, std::vector<elemento*> key, size_t* index);
 
 /* -------------------------------*/
 /**
@@ -77,5 +78,5 @@ bool BusquedaBinaria(int elementos[], size_t len, int key, size_t* index);
 
  */
 /* -------------------------------*/
-bool BusquedaBinariaR(int elementos[], size_t inf, size_t sup, char* key, size_t* index);
+bool BusquedaBinariaR(std::vector<elemento*> elementos[], size_t inf, size_t sup, char* key, size_t* index);
 
