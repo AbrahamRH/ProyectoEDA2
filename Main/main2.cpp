@@ -35,7 +35,7 @@
 
 using namespace GraphDS;
 
-#if 0
+#if 1
 void armar( elemento *elementos[], size_t tam, Graph &g )
 {
 	/*
@@ -43,14 +43,13 @@ void armar( elemento *elementos[], size_t tam, Graph &g )
 		en orden descendente
 	*/
 
-	elemento *base;
-	size_t i = 0;
+	size_t indice = 0;
 
-	while( !strcmp(elementos[i]->simbolo, "H" ) )
+	while( !strcmp(elementos[indice]->simbolo, "H" ) )
 	{
-		++i;
+		++indice;
 	}
-	if( i >= tam  ){
+	if( indice >= tam  ){
 		/* Solo hay hidrogeno en el arreglo */
 		if( tam == 2 ){
 			g.add_vertex(Vertex("H"));
@@ -66,33 +65,100 @@ void armar( elemento *elementos[], size_t tam, Graph &g )
 	{
 
 		std::pair< elemento*, int> repetidos[tam];
-		for(size_t j = 0; j< tam; j++){
-			repetidos[i] = std
+		elemento* base = nullptr;
+		size_t indice_base;
+
+		for( size_t i = 0; i< tam; ++i )
+		{
+			repetidos[i] = std::make_pair(nullptr,0);
 		}
 
-		/*	Contamos la cantidad de elementos que existen	*/
-		for(size_t j = 0; j<tam; ++j){
-			for(size_t k = 0; k<tam; j++){
-				if( strcmp(repetidos[j].first->simbolo, elementos[k]) ){
-					/*Si no existe*/
-					repetidos[k] = make_pair(elementos[k],1);
+		size_t aux = 1;
+		repetidos[0] = std::make_pair(elementos[0],0);
+
+		/*
+			Agregamos al arreglo de repetido los nombres de los elementos
+		*/
+		for(size_t i = 0; i<aux && i<tam;i++ )
+		{
+			for(size_t j = 0; j<tam ; j++)
+			{
+				if( repetidos[i].first != nullptr ){
+					size_t a = 0;
+					if( strcmp( repetidos[i].first->nombre, elementos[j]->nombre ) ){
+						for( size_t k = 0; k< aux; k++ ){
+							if( strcmp( repetidos[k].first->nombre, elementos[j]->nombre ) ){
+								a++;
+							}
+							if( a >= aux ){
+								repetidos[aux] = std::make_pair(elementos[j],0);
+								aux++;
+							}
+
+						}
+					}
 				}
-				else{
-					/*Si existe*/
-					repetidos[k].second++;
+			}
+		}
+		/* 	Contamos cuantas veces se repite cada elemento	*/
+		for(size_t i = 0; i<aux; ++i){
+			for(size_t j = 0; j<tam; ++j){
+				if(!strcmp(repetidos[i].first->nombre, elementos[j]->nombre)){
+					repetidos[i].second++;
 				}
 			}
 		}
 
-		int D = 0;
-		for()
+		/*	Obtenemos el menos electronegativo, que será la base	*/
+		for(size_t i = aux-1; i>=0; i--){
+			if( strcmp(repetidos[i].first->simbolo,"H") ){
+				base = repetidos[i].first;
+				g.add_vertex(Vertex(base->nombre));
+				indice_base = i;
+				printf("Base: %s\n", base->nombre);
+				break;
+			}
+		}
 
-		g.print();
+
+
+		for(int i = 1; i<repetidos[indice_base].second;++i){
+			char b[10];
+			sprintf(b,"%s%d",b,i);
+			g.add_vertex(Vertex(b));
+			g.add_edge(base->nombre,base->nombre);
+		}
+		/*
+		int e_faltantes = 8 - repetidos[indice_base].second;
+		if( atoi(base->val) < 8 && indice_base>0){
+			int numero_enlaces = repetidos[indice_base-1].second;
+			printf("%d\n", atoi(repetidos[indice_base-1].first->val) );
+			if( numero_enlaces<=4 || e_faltantes <=  atoi(repetidos[indice_base-1].first->val)){
+				for( int i = 0;i < numero_enlaces; ++i){
+					g.add_vertex( Vertex(repetidos[indice_base-1].first->nombre));
+					g.add_edge(base->nombre,repetidos[indice_base-1].first->nombre);
+				}
+			}
+		}
+		else{
+			int numero_enlaces = repetidos[indice_base+1].second;
+			if( numero_enlaces<=4 || e_faltantes <=  atoi(repetidos[indice_base+1].first->val)){
+				for (int i = 0; i <numero_enlaces ; ++i)
+				{
+					g.add_vertex( Vertex(repetidos[indice_base+1].first->nombre));
+					g.add_edge(base->nombre,repetidos[indice_base+1].first->nombre);
+				}
+			}
+		}
+*/
+
+		//g.print();
 
 	}
 
 }
 #endif
+
 int main()
 {
     Graph g;
@@ -117,14 +183,22 @@ int main()
 	for(size_t i = 0; i< 10; i++){
 		elementos[i]= (elemento*) malloc(sizeof(elemento) );
 	}
-	elementos[0] = GetElement((char*) "H");
-	elementos[1] = GetElement((char*) "H");
-	elementos[2] = GetElement((char*) "O");
-	//armar(elementos, 3, g);
-	//g.print();
-	//fprintf(stderr,"%s", valores->nombre);
-	//std::cout << valores ; 
 
+	elementos[0] = GetElement((char*) "O");
+	//elementos[1] = GetElement((char*) "O");
+	//elementos[2] = GetElement((char*) "N");
+	//elementos[1] = GetElement((char*) "O");
+	elementos[1] = GetElement((char*) "C");
+	elementos[2] = GetElement((char*) "C");
+	elementos[3] = GetElement((char*) "C");
+	elementos[4] = GetElement((char*) "H");
+	elementos[5] = GetElement((char*) "H");
+	elementos[6] = GetElement((char*) "H");
+	elementos[7] = GetElement((char*) "H");
+	elementos[8] = GetElement((char*) "H");
+	elementos[9] = GetElement((char*) "H");
 
+	armar(elementos, 9, g);
+	g.print();
 }
 
