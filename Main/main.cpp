@@ -43,7 +43,7 @@ int main()
 	
 
     /*
-		1. Se le pide al usuario los elementos a insertar
+		✔ 1. Se le pide al usuario los elementos a insertar
 		2. Se guardan en un arreglo, lista, etc.
 		3. Se busca el elemento más electronegativo a excepcion del H
 		4. Se realizan los enlaces, considerando:
@@ -60,12 +60,27 @@ int main()
 	//InsertTable();
 	//GetTable();
 
-	char* name = "Li";
-
-	elemento* valores = GetElement(name);
+	size_t n;
+	std::string input;
 	
-	fprintf(stderr,"%s", valores->nombre);
-	std::cout << valores ; 
+
+	std::cout << "Cuantos elementos va a juntar" << std::endl;
+	std::cin >> n;
+	
+
+	std::vector<elemento*> valores;
+	std::list<Vertex> nodos;
+	std::vector<int> asd;
+
+	for (size_t i = 0; i < n; i++)
+	{
+		std::cout << "Nombre del elemento: " << i+1 << " a insertar." << std::endl;
+		std::cin >> input;
+		valores.push_back( GetElement( input.c_str() ) );
+	}
+	
+	//fprintf(stderr,"%s", valores.at(0)->nombre);
+	 
 	
 
 }

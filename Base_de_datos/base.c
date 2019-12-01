@@ -175,7 +175,7 @@ int callback2( void* data, int argc, char** argv, char** col_name )
 {
 	
 	
-	fprintf( stderr, "--- %s ---\n", "Información del Elemento" );
+	fprintf( stderr, "--- %s ---\n", "Informacion del Elemento" );
 
 /**
  * 0 num atom
@@ -205,7 +205,7 @@ int callback2( void* data, int argc, char** argv, char** col_name )
 	return 0;
 }
 
-elemento* GetElement(char* nombre ){
+elemento* GetElement(const char* nombre ){
 	sqlite3* db;
 	
 	int rc = sqlite3_open("elementos.sqlite3",&db);
@@ -219,7 +219,7 @@ elemento* GetElement(char* nombre ){
 	char sql[44];
 	char* sql1 = (char*) "SELECT * FROM elementos WHERE simbolo=";
 	sprintf(sql,"%s%s%s%s",sql1,"\'",nombre,"\'");
-	printf("%s\n", sql);
+	//printf("%s\n", sql);
 	
 	char* err_msg = NULL;
 
