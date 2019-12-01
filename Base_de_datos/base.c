@@ -175,7 +175,7 @@ int callback2( void* data, int argc, char** argv, char** col_name )
 {
 	
 	
-	fprintf( stderr, "--- %s ---\n", "Elemento" );
+	fprintf( stderr, "--- %s ---\n", "Información del Elemento" );
 
 /**
  * 0 num atom
@@ -223,6 +223,8 @@ elemento* GetElement(char* nombre ){
 	}
 	char sql[44];
 	char* sql1 = (char*) "SELECT * FROM elementos WHERE simbolo=";
+	sprintf(sql,"%s%s%s%s",sql1,"\'",nombre,"\'");
+
 	printf("%s\n", sql);
 	char* err_msg = NULL;
 

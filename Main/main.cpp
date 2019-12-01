@@ -62,9 +62,7 @@ int main()
 
 	char* name = "Li";
 
-	elemento* valores = (elemento*) malloc(sizeof(elemento) );
-	
-	valores = GetElement(name);
+	elemento* valores = GetElement(name);
 	
 	fprintf(stderr,"%s", valores->nombre);
 	std::cout << valores ; 
