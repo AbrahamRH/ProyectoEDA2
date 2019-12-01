@@ -81,7 +81,17 @@ int main()
 		valores.push_back( GetElement( input.c_str() ) );
 	}
 	
-	QuickSort( valores, 0, n);
+	for(auto* w : valores){
+		std::cout << "elemento: " << w->nombre << " electronegatividad:: " << w->e_negatividad << std::endl;
+	}
+
+
+	QuickSort( valores, 0, n-1);
+	std::cout << "done SORT!" << std::endl;
+
+	for(auto* w : valores){
+		std::cout << "elemento: " << w->nombre << " electronegatividad:: " << w->e_negatividad << std::endl;
+	}
 
 
 	//fprintf(stderr,"%s", valores.at(0)->nombre);

@@ -38,7 +38,7 @@
  * @param last  Indice a la posición final del arreglo
  */
 /* -------------------------------*/
-void QuickSort(std::vector<elemento*> elementos ,size_t first, size_t last);
+void QuickSort(std::vector<elemento*> elementos ,int first, int last);
 
 /* -------------------------------*/
 /**

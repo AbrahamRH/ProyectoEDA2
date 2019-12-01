@@ -30,37 +30,48 @@
 #include <stdlib.h>
 #include <vector>
 
-void QuickSort( std::vector<elemento*> elementos, size_t first, size_t last)
+void QuickSort( std::vector<elemento*> elementos, int first, int last)
 {
-	std::cout << "LLAMADA INICIAL: " << std::endl ;
+	//std::cout << "LLAMADA INICIAL: " << std::endl ;
 	size_t mid = ( first + last ) / 2;
 	elemento* piv = elementos[ mid ];
-	std::cout << "ASIGNAR PIVOTE: "<< std::endl ;
-	size_t x0 = first;
-	size_t x1 = last;
+	//std::cout << "ASIGNAR PIVOTE: "<< std::endl ;
+	int x0 = first;
+	int x1 = last;
 
+	//std::cout << "CICLO COMP: "<< x0 << x1 << std::endl ;
 	while( x0 <= x1 ){
-		std::cout << "PRIMERA COMP: " << std::endl ;
+		//std::cout << x0 << std::endl << x1 << std::endl;
+
+		//std::cout << "PRIMERA COMP: " << std::endl ;
 		while( atof(elementos[ x0 ]->e_negatividad) < atof(piv->e_negatividad) )
 			++x0;
-		std::cout << "SEGUNDA COMP: " << std::endl ;			
+		//std::cout << "SEGUNDA COMP: " << std::endl ;			
 		while( atof(elementos[ x1 ]->e_negatividad) > atof(piv->e_negatividad) )
 			--x1;
+
+		//std::cout << "IF X0 <= X1 " << std::endl ;
 		if( x0 <= x1 ){
 
-			std::cout << "SWAP: " << std::endl ;
+			//std::cout << "SWAP: " << std::endl ;
 			swap( elementos[x0], elementos[x1] );
 			
 			++x0;
 			--x1;
 		}
 	}
-	if( first < x1)
-	std::cout << "LLAMADA REC IZQ: " << std::endl;
+	
+	if( first < x1){
+		//std::cout << "LLAMADA REC IZQ: " << std::endl;
 		QuickSort( elementos, first, x1 );
-	if( x0 < last )
-	std::cout << "LLAMADA REC DER: " << std::endl;
+	}
+		
+	
+	if( x0 < last ){
+		//std::cout << "LLAMADA REC DER: " << std::endl;
 		QuickSort( elementos, x0, last );
+	}
+		
 }
 
 void swap(elemento* x ,elemento* y)
