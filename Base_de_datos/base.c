@@ -191,13 +191,13 @@ int callback2( void* data, int argc, char** argv, char** col_name )
 	}
 		query->num_atom =(char *) malloc(1 + strlen(argv[0]));
 		query->val =(char *) malloc(1 + strlen(argv[1]));
-		query->electronegatividad = (char*) malloc(1+strlen(argv[2]));
+		query->e_negatividad = (char*) malloc(1+strlen(argv[2]));
 		query->simbolo =(char *) malloc(1 + strlen(argv[4]));
 		query->nombre =(char *) malloc(1 + strlen(argv[3]));
 
 		memcpy(query->num_atom, argv[ 0 ], 1+strlen(argv[0]));
 		memcpy(query->val , argv[ 1 ], 1+strlen(argv[1]));
-		memcpy(query->electronegatividad,argv[2], 1+strlen(argv[2]));
+		memcpy(query->e_negatividad,argv[2], 1+strlen(argv[2]));
 		memcpy(query->simbolo , argv[ 4 ], 1+strlen(argv[4]));
 		memcpy(query->nombre , argv[ 3 ], 1+strlen(argv[3]));
 

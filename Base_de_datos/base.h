@@ -56,7 +56,7 @@ void GetTable();
  * @param nombre Nombre del elemento a buscar. 
  */
 /* -------------------------------*/
-elemento* GetElement(const char* nombre );
+elemento* GetElement( char* nombre );
 
 
 /* -------------------------------*/

@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <vector>
 
-void QuickSort( std::vector<elemento*> elementos, int first, int last)
+void QuickSort( elemento* elementos[], int first, int last)
 {
 	//std::cout << "LLAMADA INICIAL: " << std::endl ;
 	size_t mid = ( first + last ) / 2;
@@ -44,10 +44,10 @@ void QuickSort( std::vector<elemento*> elementos, int first, int last)
 		//std::cout << x0 << std::endl << x1 << std::endl;
 
 		//std::cout << "PRIMERA COMP: " << std::endl ;
-		while( atof(elementos[ x0 ]->e_negatividad) < atof(piv->e_negatividad) )
+		while( atof(elementos[ x0 ]->e_negatividad) > atof(piv->e_negatividad) )
 			++x0;
 		//std::cout << "SEGUNDA COMP: " << std::endl ;			
-		while( atof(elementos[ x1 ]->e_negatividad) > atof(piv->e_negatividad) )
+		while( atof(elementos[ x1 ]->e_negatividad) < atof(piv->e_negatividad) )
 			--x1;
 
 		//std::cout << "IF X0 <= X1 " << std::endl ;
