@@ -32,12 +32,11 @@
 #include "../Estructuras/grafo.hpp"
 #include "../Base_de_datos/sqlite3.h"
 #include "../Base_de_datos/base.h"
-#include "../Estructuras/Algoritmos.hpp"
 
 using namespace GraphDS;
 
 #if 1
-void armar( elemento* elementos[], size_t tam, Graph &g )
+void armar( elemento *elementos[], size_t tam, Graph &g )
 {
 	/*
 		Si el arreglo está ordenado por electronegatividad
@@ -123,7 +122,7 @@ void armar( elemento* elementos[], size_t tam, Graph &g )
 
 		char b[10];
 		char c[10];
-		if( repetidos[indice_base].second >=2 && indice_base > 0){
+		if( indice_base > 0){
 			sprintf(c,"%s%d",base->nombre,0);
 			g.add_vertex( Vertex(c) );
 			for(int i  = 1; i <repetidos[indice_base].second; i+=2){
@@ -172,7 +171,7 @@ void armar( elemento* elementos[], size_t tam, Graph &g )
 int main()
 {
     Graph g;
-    elemento* elementos[10];
+    elemento *elementos[10];
     /*
 		1. Se le pide al usuario los elementos a insertar
 		2. Se guardan en un arreglo, lista, etc.
@@ -187,9 +186,8 @@ int main()
 			e. Se complete el octeto en cada uno de ellos
 	*/
 
-	/* No se vuelve a crear ni a insertar en la tabla por que ya se tiene la base de datos con elementos comunes */
-	//CreateTable();
-	//InsertTable();
+	CreateTable();
+	InsertTable();
 
 	for(size_t i = 0; i< 10; i++){
 		elementos[i]= (elemento*) malloc(sizeof(elemento) );
@@ -209,10 +207,7 @@ int main()
 	elementos[8] = GetElement((char*) "H");
 	elementos[9] = GetElement((char*) "H");
 
-
-	QuickSort(elementos,0,9);
-
-	armar(elementos, 9, g);
+	armar(elementos, 10, g);
 	g.print();
 }
 
