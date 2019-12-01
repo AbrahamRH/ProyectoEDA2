@@ -27,27 +27,151 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
+#include <cstring>
 
 #include "../Estructuras/grafo.hpp"
-#include "../Base_de_datos/base.h"
-#include "../Estructuras/Algoritmos.hpp"
 #include "../Base_de_datos/sqlite3.h"
-
+#include "../Base_de_datos/base.h"
 
 using namespace GraphDS;
 
+#if 1
+void armar( elemento *elementos[], size_t tam, Graph &g )
+{
+	/*
+		Si el arreglo está ordenado por electronegatividad
+		en orden descendente
+	*/
+
+	size_t indice = 0;
+
+	while( !strcmp(elementos[indice]->simbolo, "H" ) )
+	{
+		++indice;
+	}
+	if( indice >= tam  ){
+		/* Solo hay hidrogeno en el arreglo */
+		if( tam == 2 ){
+			g.add_vertex(Vertex("H"));
+			g.add_vertex(Vertex("H"));
+			g.add_edge("H","H");
+		}
+		else
+		{
+			std::cout <<"No podemos generar una estructura con los datos proporcionados\n";
+		}
+	}
+	else
+	{
+
+		std::pair< elemento*, int> repetidos[tam];
+		elemento* base = nullptr;
+		size_t indice_base;
+
+		for( size_t i = 0; i< tam; ++i )
+		{
+			repetidos[i] = std::make_pair(nullptr,0);
+		}
+
+		size_t aux = 1;
+		repetidos[0] = std::make_pair(elementos[0],0);
+
+		/*
+			Agregamos al arreglo de repetido los nombres de los elementos
+		*/
+		for(size_t i = 0; i<aux && i<tam;i++ )
+		{
+			for(size_t j = 0; j<tam ; j++)
+			{
+				if( repetidos[i].first != nullptr ){
+					size_t a = 0;
+					if( strcmp( repetidos[i].first->nombre, elementos[j]->nombre ) ){
+						for( size_t k = 0; k< aux; k++ ){
+							if( strcmp( repetidos[k].first->nombre, elementos[j]->nombre ) ){
+								a++;
+							}
+							if( a >= aux ){
+								repetidos[aux] = std::make_pair(elementos[j],0);
+								aux++;
+							}
+
+						}
+					}
+				}
+			}
+		}
+		/* 	Contamos cuantas veces se repite cada elemento	*/
+		for(size_t i = 0; i<aux; ++i){
+			for(size_t j = 0; j<tam; ++j){
+				if(!strcmp(repetidos[i].first->nombre, elementos[j]->nombre)){
+					repetidos[i].second++;
+				}
+			}
+		}
+
+		/*	Obtenemos el menos electronegativo, que será la base	*/
+		for(size_t i = aux-1; i>=0; i--){
+			if( strcmp(repetidos[i].first->simbolo,"H") ){
+				base = repetidos[i].first;
+				g.add_vertex(Vertex(base->nombre));
+				indice_base = i;
+				printf("Base: %s\n", base->nombre);
+				break;
+			}
+		}
+
+
+		if( repetidos[indice_base].second >=2 && indice_base > 0){
+			char b[10];
+			char c[10];
+			sprintf(c,"%s%d",base->nombre,0);
+			g.add_vertex( Vertex(c) );
+			for(int i  = 1; i <repetidos[indice_base].second; i+=2){
+				sprintf(b,"%s%d",base->nombre,i);
+				g.add_vertex( Vertex(b) );
+				g.add_edge(b,c);
+				sprintf(c,"%s%d",base->nombre,i);
+			}
+			sprintf(c,"%s%d",base->nombre,0);
+			g.add_edge(base->nombre,c);
+		}
+		int e_faltantes = 8 - atoi(repetidos[indice_base-1].first->val); 
+		if( atoi(base->val) < 8 && indice_base>0){
+			int numero_enlaces = repetidos[indice_base-1].second;
+			printf("%d\n", atoi(repetidos[indice_base-1].first->val) );
+			if( numero_enlaces<=4 || e_faltantes <=  atoi(repetidos[indice_base-1].first->val)){
+				for( int i = 0;i < numero_enlaces; ++i){
+					g.add_vertex( Vertex(repetidos[indice_base-1].first->nombre));
+					g.add_edge(base->nombre,repetidos[indice_base-1].first->nombre);
+				}
+			}
+		}
+		else{
+			int numero_enlaces = repetidos[indice_base+1].second;
+			if( numero_enlaces<=4 || e_faltantes <=  atoi(repetidos[indice_base+1].first->val)){
+				for (int i = 0; i <numero_enlaces ; ++i)
+				{
+					g.add_vertex( Vertex(repetidos[indice_base+1].first->nombre));
+					g.add_edge(base->nombre,repetidos[indice_base+1].first->nombre);
+				}
+			}
+		}
+
+		//g.print();
+
+	}
+
+}
+#endif
 
 int main()
 {
     Graph g;
-	
-	Vertex v = Vertex("Li");
-	
-
+    elemento *elementos[10];
     /*
-		✔ 1. Se le pide al usuario los elementos a insertar
-		✔ 2. Se guardan en un arreglo, lista, etc.
-		3. Se busca el elemento más electronegativo a excepcion del H
+		1. Se le pide al usuario los elementos a insertar
+		2. Se guardan en un arreglo, lista, etc.
+		3. Se busca el elemento más electronegativo a excepcion del H ---- 
 		4. Se realizan los enlaces, considerando:
 			a. Los atomos de O no se enlazan entre ellos a excepción
 				del O2, O3
@@ -58,45 +182,28 @@ int main()
 			e. Se complete el octeto en cada uno de ellos
 	*/
 
-	//CreateTable();
-	//InsertTable();
-	//GetTable();
+	CreateTable();
+	InsertTable();
 
-	size_t n;
-	std::string input;
-	
-
-	std::cout << "Cuantos elementos va a juntar" << std::endl;
-	std::cin >> n;
-	
-
-	std::vector<elemento*> valores;
-	std::list<Vertex> nodos;
-	std::vector<int> asd;
-
-	for (size_t i = 0; i < n; i++)
-	{
-		std::cout << "Nombre del elemento: " << i+1 << " a insertar." << std::endl;
-		std::cin >> input;
-		valores.push_back( GetElement( input.c_str() ) );
-	}
-	
-	for(auto* w : valores){
-		std::cout << "elemento: " << w->nombre << " electronegatividad:: " << w->e_negatividad << std::endl;
+	for(size_t i = 0; i< 10; i++){
+		elementos[i]= (elemento*) malloc(sizeof(elemento) );
 	}
 
+	elementos[0] = GetElement((char*) "O");
+	//elementos[1] = GetElement((char*) "O");
+	//elementos[2] = GetElement((char*) "N");
+	//elementos[1] = GetElement((char*) "O");
+	elementos[1] = GetElement((char*) "C");
+	elementos[2] = GetElement((char*) "C");
+	elementos[3] = GetElement((char*) "C");
+	elementos[4] = GetElement((char*) "H");
+	elementos[5] = GetElement((char*) "H");
+	elementos[6] = GetElement((char*) "H");
+	elementos[7] = GetElement((char*) "H");
+	elementos[8] = GetElement((char*) "H");
+	elementos[9] = GetElement((char*) "H");
 
-	QuickSort( valores, 0, n-1);
-	std::cout << "done SORT!" << std::endl;
-
-	for(auto* w : valores){
-		std::cout << "elemento: " << w->nombre << " electronegatividad:: " << w->e_negatividad << std::endl;
-	}
-
-
-	//fprintf(stderr,"%s", valores.at(0)->nombre);
-	 
-	
-
+	armar(elementos, 9, g);
+	g.print();
 }
 
