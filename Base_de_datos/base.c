@@ -25,10 +25,11 @@
 
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 #include "sqlite3.h"
 #include "base.h"
+//#include <cstdlib>
 
 
 #if 0
@@ -63,7 +64,7 @@ void CreateTable()
 	}
 
 	/*Consulta para la creación de una base de datos*/
-	char* query = "DROP TABLE IF EXISTS elementos; "
+	char* query = (char*) "DROP TABLE IF EXISTS elementos; "
 				  "CREATE TABLE elementos( "
 				  "numero_atomico INTERGER PRIMARY KEY NOT NULL,"
 				  "electrones_disponibles INTEGER KEY NOT NULL,"
@@ -101,7 +102,7 @@ void InsertTable()
 	}
 
 	/*Consulta para la inserción de datos a la tabla*/
-	char* query = "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 1,1, 'Hidrógeno', 'H' );"
+	char* query = (char*)"INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 1,1, 'Hidrógeno', 'H' );"
 				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 2, 0, 'Helio',    'He');"
 				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 8, 6, 'Oxígeno',  'O' );"
 				  "INSERT INTO elementos( numero_atomico,electrones_disponibles, nombre, simbolo) VALUES ( 7, 5, 'Nitrógeno','N' );"
@@ -157,7 +158,7 @@ void GetTable()
 	} else {
 		fprintf(stderr, "Base de datos abierta satisfactoriamente -- \n");
 	}
-	char* sql = "SELECT * FROM elementos;";
+	char* sql = (char*)"SELECT * FROM elementos;";
 	char* err_msg = NULL;
 	const char* user_msg = "Callback llamada";
 	rc = sqlite3_exec( db, sql, callback, (void*)user_msg, &err_msg );
@@ -177,31 +178,37 @@ int callback2( void* data, int argc, char** argv, char** col_name )
 	fprintf( stderr, "--- %s ---\n", "Elemento" );
 
 /**
- * 0 val
- * 1 num atom
+ * 0 num atom
+ * 1 val
  * 2 nom
  * 3 sim
 */
-	elemento* query = (elemento*) malloc(sizeof(elemento) );
-	
+	if(argc == 0 ){
+		printf("No hay elementos\n");
+	}
+	else{
+	elemento *query =(elemento*) malloc(sizeof(elemento));
 
-	//for( int i = 0; i < argc; ++i ){
-		//printf( "%s = %s\n", col_name[ i ], argv[ i ] ? argv[ i ] : "NULL" );
-		query->val = argv[0];
-		query->num_atom = argv[1];
-		query->simbolo = argv[3];
-		query->nombre = argv[2];
+	for( int i = 0; i < argc; ++i ){
+		printf( "%s = %s\n", col_name[ i ], argv[ i ] ? argv[ i ] : "NULL" );
+	}
+		query->num_atom =(char *) malloc(1 + strlen(argv[0]));
+		query->val =(char *) malloc(1 + strlen(argv[1]));
+		query->simbolo =(char *) malloc(1 + strlen(argv[3]));
+		query->nombre =(char *) malloc(1 + strlen(argv[2]));
 
-		
+		memcpy(query->num_atom, argv[ 0 ], 1+strlen(argv[0]));
+		memcpy(query->val , argv[ 1 ], 1+strlen(argv[1]));
+		memcpy(query->simbolo , argv[ 3 ], 1+strlen(argv[3]));
+		memcpy(query->nombre , argv[ 2 ], 1+strlen(argv[2]));
 
-		data = (elemento*)query;
-		fprintf( stdout, "--- %s ---\n", ((elemento*)data)->nombre );  
-
+		memcpy(data,query,sizeof(elemento));
 	//}
 	printf( "\n" );
+	free(query);
+	}
 	return 0;
 }
-
 
 elemento* GetElement(char* nombre ){
 	sqlite3* db;
@@ -215,11 +222,11 @@ elemento* GetElement(char* nombre ){
 		fprintf(stderr, "Base de datos abierta satisfactoriamente -- \n");
 	}
 
-	char* sqlins = "SELECT * FROM elementos WHERE simbolo=";
+	char* sqlins = (char*)"SELECT * FROM elementos WHERE simbolo=";
 	//strcat(sqlins,'"'+nombre+'"'+';');
-	char* sql =  "SELECT * FROM elementos WHERE simbolo='Bi'";
+	char* sql = (char*) "SELECT * FROM elementos WHERE simbolo='C'";
 	char* err_msg = NULL;
-	const char* user_msg = "Callback llamada";
+	const char* user_msg =(char*) "Callback 2 llamada";
 
 	elemento* valores = (elemento*) malloc(sizeof(elemento) );
 
@@ -228,11 +235,11 @@ elemento* GetElement(char* nombre ){
 	if( rc != SQLITE_OK ){
 		fprintf( stderr, "SQL error: %s\n", err_msg );
 		sqlite3_free( err_msg );
-	} else{ fprintf( stdout, "Hecho!\n" ); }
+	} else{ 
+		fprintf( stdout, "Has extraido : %s\n", valores->nombre ); 
+	}	
 	sqlite3_close(db);
 
 
-	fprintf( stdout, "--- %s ---\n", valores->nombre );
 	return valores;
-	
 }
