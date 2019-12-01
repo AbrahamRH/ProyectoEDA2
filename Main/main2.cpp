@@ -27,6 +27,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
+#include <cstring>
 
 #include "../Estructuras/grafo.hpp"
 #include "../Base_de_datos/sqlite3.h"
@@ -34,58 +35,68 @@
 
 using namespace GraphDS;
 
-#if 1
-elemento armar( elemento elementos[], &Graph g )
+#if 0
+void armar( elemento *elementos[], size_t tam, Graph &g )
 {
 	/*
 		Si el arreglo está ordenado por electronegatividad
 		en orden descendente
 	*/
-	elemento base;
-	int i = 0;
 
-	int tamanio = ( sizeof(elementos)/ sizeof(elementos[0]) );
-	while( strcmp(elementos[i].simbolo, "H" ) )
+	elemento *base;
+	size_t i = 0;
+
+	while( !strcmp(elementos[i]->simbolo, "H" ) )
 	{
 		++i;
 	}
-	if( i >= tamanio  ){
+	if( i >= tam  ){
 		/* Solo hay hidrogeno en el arreglo */
-		if( tamanio == 2 ){
+		if( tam == 2 ){
 			g.add_vertex(Vertex("H"));
 			g.add_vertex(Vertex("H"));
 			g.add_edge("H","H");
 		}
 		else
 		{
-			std::cout <<"No podemos generar una estructura con los datos proporcionados"
+			std::cout <<"No podemos generar una estructura con los datos proporcionados\n";
 		}
 	}
 	else
 	{
-		base = elementos[i];
-		int na;
-		g.add_vertex(Vertex(base.nombre));
-		if( (na = stoi( base.num_atom )) != 0 ){
-			/*
 
-			*/
+		std::pair< elemento*, int> repetidos[tam];
+		for(size_t j = 0; j< tam; j++){
+			repetidos[i] = std
 		}
+
+		/*	Contamos la cantidad de elementos que existen	*/
+		for(size_t j = 0; j<tam; ++j){
+			for(size_t k = 0; k<tam; j++){
+				if( strcmp(repetidos[j].first->simbolo, elementos[k]) ){
+					/*Si no existe*/
+					repetidos[k] = make_pair(elementos[k],1);
+				}
+				else{
+					/*Si existe*/
+					repetidos[k].second++;
+				}
+			}
+		}
+
+		int D = 0;
+		for()
+
+		g.print();
 
 	}
 
-	/*
-		Si no está ordenado por electronegatividad
-	*/
 }
 #endif
 int main()
 {
     Graph g;
-	
-	Vertex v = Vertex("Li");
-	
-
+    elemento *elementos[10];
     /*
 		1. Se le pide al usuario los elementos a insertar
 		2. Se guardan en un arreglo, lista, etc.
@@ -102,12 +113,15 @@ int main()
 
 	CreateTable();
 	InsertTable();
-	//GetTable();
-	char* name = (char*)"Li";
 
-	elemento* valores = (elemento*) malloc(sizeof(elemento) );
-	valores = GetElement(name);
-	
+	for(size_t i = 0; i< 10; i++){
+		elementos[i]= (elemento*) malloc(sizeof(elemento) );
+	}
+	elementos[0] = GetElement((char*) "H");
+	elementos[1] = GetElement((char*) "H");
+	elementos[2] = GetElement((char*) "O");
+	//armar(elementos, 3, g);
+	//g.print();
 	//fprintf(stderr,"%s", valores->nombre);
 	//std::cout << valores ; 
 
