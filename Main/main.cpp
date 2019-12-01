@@ -44,7 +44,7 @@ int main()
 
     /*
 		✔ 1. Se le pide al usuario los elementos a insertar
-		2. Se guardan en un arreglo, lista, etc.
+		✔ 2. Se guardan en un arreglo, lista, etc.
 		3. Se busca el elemento más electronegativo a excepcion del H
 		4. Se realizan los enlaces, considerando:
 			a. Los atomos de O no se enlazan entre ellos a excepción
@@ -68,7 +68,7 @@ int main()
 	std::cin >> n;
 	
 
-	std::vector<elemento*> valores;
+	std::list<elemento*> valores;
 	std::list<Vertex> nodos;
 	std::vector<int> asd;
 
@@ -79,6 +79,9 @@ int main()
 		valores.push_back( GetElement( input.c_str() ) );
 	}
 	
+	
+
+
 	//fprintf(stderr,"%s", valores.at(0)->nombre);
 	 
 	
