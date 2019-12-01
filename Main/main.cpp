@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include <string>
 #include <cstring>
+#include <omp.h>
 
 #include "../Estructuras/grafo.hpp"
 #include "../Base_de_datos/sqlite3.h"
@@ -102,6 +103,7 @@ void armar( elemento* elementos[], size_t tam, Graph &g )
 			}
 		}
 		/* 	Contamos cuantas veces se repite cada elemento	*/
+		#pragma omp parallel for
 		for(size_t i = 0; i<aux; ++i){
 			for(size_t j = 0; j<tam; ++j){
 				if(!strcmp(repetidos[i].first->nombre, elementos[j]->nombre)){
@@ -111,6 +113,7 @@ void armar( elemento* elementos[], size_t tam, Graph &g )
 		}
 
 		/*	Obtenemos el menos electronegativo, que será la base	*/
+		
 		for(size_t i = aux-1; i>=0; i--){
 			if( strcmp(repetidos[i].first->simbolo,"H") ){
 				base = repetidos[i].first;
@@ -141,11 +144,13 @@ void armar( elemento* elementos[], size_t tam, Graph &g )
 			int numero_enlaces = repetidos[indice_base-1].second;
 			printf("%d\n", atoi(repetidos[indice_base-1].first->val) );
 			if( numero_enlaces<=4 || e_faltantes <=  atoi(repetidos[indice_base-1].first->val)){
+				#pragma omp parallel for
 				for( int i = 0;i < numero_enlaces; ++i){
 					g.add_vertex( Vertex(repetidos[indice_base-1].first->nombre));
 					g.add_edge(base->nombre,repetidos[indice_base-1].first->nombre);
 				}
 			}
+				
 				for (int i = 0; i <=(repetidos[indice_base+1].second) ; i+=2)
 				{
 					sprintf(c,"%s%d",base->nombre,0);
