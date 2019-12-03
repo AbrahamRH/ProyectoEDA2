@@ -4,4 +4,4 @@ g++ -Wall -std=c++11 main.cpp -o main.out ../Estructuras/grafo.hpp ../Estructura
 ../Base_de_datos/base.h ../Base_de_datos/sqlite3.o -ldl -lpthread
 
 Instruccion de compilacion desde la carpeta raiz.
-g++ -Wall -std=c++11 -o ./Main/main.o ./Main/main.cpp ./Estructuras/grafo.hpp ./Estructuras/grafo.cpp ./Base_de_datos/base.c  ./Base_de_datos/sqlite3.o  -lpthread
+g++ -Wall -std=c++11 -o ./Main/main.o ./Main/main.cpp ./Estructuras/grafo.hpp ./Estructuras/grafo.cpp ./Base_de_datos/base.c  ./Base_de_datos/sqlite3.o ./Estructuras/Algoritmos.cpp ./Estructuras/Algoritmos.hpp -fopenmp  -lpthread
